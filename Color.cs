@@ -9,14 +9,17 @@ class Color {
     ColorsList.AddRange(colors);
 
  }
-string BackgroundColor(){
-    thecolor = "BLACK";
-    return thecolor;
-}
 
-string PlayerColor(){
-    thecolor = "WHITE";
-    return thecolor;
-}
+ string BackgroundColor = "BLACK";
+ string PlayerColor = "WHITE";
+// string BackgroundColor(){
+//     thecolor = "BLACK";
+//     return thecolor;
+// }
+
+// string PlayerColor(){
+//     thecolor = "WHITE";
+//     return thecolor;
+// }
 
 }
