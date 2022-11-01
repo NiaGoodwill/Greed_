@@ -1,0 +1,4 @@
+class Gem: Object{
+
+
+}
