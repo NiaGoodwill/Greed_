@@ -1,26 +1,50 @@
 using Raylib_cs;
+using System.Numerics;
 
-class Player: Position{
+class Player: ObjectPosition{
 
     int MovementSpeed;
+    public Rectangle thePlayer;
 
-    public Player()
+    int Size;
+
+    public Player(): base()
     {
-        ColorsList.AddRange(colors);
+        Size = 30;
         MovementSpeed = 4;
-
+        thePlayer.x = 390;
+        thePlayer.y = 420;
+        thePlayer.width = Size;
+        thePlayer.height = Size;
+        Position.X = thePlayer.x;
+        Position.Y = thePlayer.y;
     }
 
     public void Move()
     {
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_UP)) {
-            PlayerRectangle.y -= MovementSpeed;
-        }
-        if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN)) {
-            PlayerRectangle.y += MovementSpeed;
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT)) {
+            Position.X += MovementSpeed;
         }
 
+        if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT)) {
+            Position.X -= MovementSpeed;
+        }
+
+        // if (Raylib.IsKeyDown(KeyboardKey.KEY_UP)) {
+            // Position.Y -= MovementSpeed;
+        // }
+        
+        // if (Raylib.IsKeyDown(KeyboardKey.KEY_DOWN)) {
+            // Position.Y += MovementSpeed;
+        // }
+
+
+        thePlayer.x = Position.X;
     }
 
+    public override void Draw()
+    {
+        Raylib.DrawRectangleLines((int)Position.X, (int)Position.Y, Size, Size, playerColor);
 
+    }
 }
