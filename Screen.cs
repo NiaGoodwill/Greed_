@@ -1,6 +1,6 @@
 using Raylib_cs;
 using System.Numerics;
-class Screen:GameColor
+class Screen: ObjectColor
 {
     int ScreenHeight;
     int ScreenWidth;
