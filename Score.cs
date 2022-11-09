@@ -29,4 +29,9 @@ class Score: ObjectPosition
         }
     }
 
+    public int GetScore()
+    {
+        return theScore;
+    }
+
 }

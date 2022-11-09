@@ -21,62 +21,89 @@ class Screen: ObjectColor
     {
         Raylib.InitWindow(ScreenWidth, ScreenHeight, "Greed");
         Raylib.SetTargetFPS(60);
+
+        int timeIndex = 0;
+
+        bool gameOver = false;
+
   
         while (!Raylib.WindowShouldClose())
         {
-            bool delete = false;
-            int deleteIndex = 0;
-            int index = 0;
-            foreach (var obj in Objects)
+            if (!gameOver)
             {
-                if (!obj.CheckCollision(player.thePlayer))
+                int deleteIndex = 0;
+                int index = 0;
+                bool delete = false;
+                foreach (var obj in Objects)
                 {
-                    obj.Move();
-                }
-                else
-                {
-                    score.AdjustScore(obj);
-                    delete = true;
-                    deleteIndex = index;
-                }
+                    if (obj.CheckCollision(player.thePlayer))
+                    {
+                        score.AdjustScore(obj);
+                        delete = true;
+                        deleteIndex = index;
+                    }
+                    else
+                    {
+                        obj.Move();
+                    }
 
-                index += 1;
-            }
-            if (delete)
-            {
-                Objects.RemoveAt(deleteIndex);
-            }
-
-            player.Move();
-
-            if (random.Next(7) == 1)
-            {
-                int randNum = random.Next(2);
-                if (randNum == 1)
-                {
-                    var rock = new Rock();
-                    Objects.Add(rock);
-                }
-                else
-                {
-                    var gem = new Gem ();
-                    Objects.Add(gem);
+                    index += 1;
                 }
 
+                if (delete)
+                {
+                    Objects.RemoveAt(deleteIndex);
+                }
+
+                player.Move();
+
+                if (random.Next(7) == 1)
+                {
+                    int randNum = random.Next(2);
+                    if (randNum == 1)
+                    {
+                        var rock = new Rock();
+                        Objects.Add(rock);
+                    }
+                    else
+                    {
+                        var gem = new Gem ();
+                        Objects.Add(gem);
+                    }
+
+                }
+
+                Raylib.BeginDrawing();
+                Raylib.ClearBackground(backgroundColor);
+
+                score.Draw();
+                player.Draw();
+
+                foreach (var obj in Objects)
+                {
+                    obj.Draw();
+                }
+
+                Raylib.EndDrawing();
+
+                timeIndex += 1;
+
+                if (timeIndex >= 3000)
+                {
+                    gameOver = true;
+                }
             }
 
-            Raylib.BeginDrawing();
-            Raylib.ClearBackground(backgroundColor);
-
-            score.Draw();
-            player.Draw();
-
-            foreach (var obj in Objects)
+            else
             {
-                obj.Draw();
-            }
+                Raylib.BeginDrawing();
+                Raylib.ClearBackground(backgroundColor);
 
-            Raylib.EndDrawing();
+                Raylib.DrawText("Game Over", ScreenWidth/2 -170, ScreenHeight/2 -70, 70, playerColor);
+                Raylib.DrawText($"Score: {score.GetScore()}", ScreenWidth/2 -130, ScreenHeight/2, 50, playerColor);
+
+                Raylib.EndDrawing();
+            }
         }
 
         Raylib.CloseWindow();
